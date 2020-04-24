@@ -8,6 +8,7 @@ let isSwing = false;
 
 exports.index = function(req,res,next)
 {   
+    console.log("Requset from mobile app:\n" +JSON.stringify(req.body.code) + "\n");
     const {code} = req.body;
     newCode= req.body.code.power;
     newSwing = req.body.code.swingOne;

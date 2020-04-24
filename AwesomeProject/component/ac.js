@@ -2,14 +2,14 @@ import React, {useState, useEffect} from 'react';
 import {Image, StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 const styles = StyleSheet.create({
   SubmitButtonStyle: {
-    margin: 10,
+    margin: 6,
     padding: 8,
     backgroundColor: '#deac50',
     borderRadius: 50,
     borderWidth: 1,
     borderColor: '#fff',
-    width: 70,
-    height: 70,
+    width: 77,
+    height: 77,
   },
   temp: {
     fontWeight : 'bold',
@@ -256,7 +256,10 @@ function ac() {
       style={styles.SubmitButtonStyle}
       activeOpacity={0.5}
       onPress={functionMake}>
-      <Image source={image} style={{width: 50, height: 50}} />
+      <View style={{ alignItems: 'center'}}>
+      <Image source={image} style={{width: 30, height: 30}} />
+      <Text>{title}</Text>
+      </View>
     </TouchableOpacity>
   );
 }

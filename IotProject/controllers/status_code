@@ -1,0 +1,5 @@
+    1xx: (100, 101) : Nó có nghĩa là yêu cầu đã được chấp nhận và tiến trình sẽ được tiếp tục.
+    2xx: (200 – 206) : Nó có nghĩa là hành động đã được nhận, hiểu và thực hiện thành công.
+    3xx: (300 – 307) : Nó có nghĩa là phải thực hiện thêm hành động để hoàn thành yêu cầu.
+    4xx: (400 – 417 ) : Nó có nghĩa là yêu cầu bị sai cú pháp hay là không thể được hoàn thành.
+    5xx: (500 – 505) : Nó có nghĩa là server không thể thực hiện được yêu cầu.

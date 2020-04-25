@@ -5,7 +5,7 @@ Thư mục thứ nhất là Source Code của mobile app.
 ------------------------------------------------------------------------------------------------------------------
 Thư mục thứ hai là Source Code của Server
 -------------------------------------------------------------------------------------------------------------------
-Thư mục thứ nhất là Source Code của chương trình tạo ra thông tin ảo của nhiệt độ và độ ẩm theo thời gian thực.
+Thư mục thứ ba là Source Code của chương trình tạo ra thông tin ảo của nhiệt độ và độ ẩm theo thời gian thực.
 --------------------------------------------------------------------------------------------------------------------
 
 

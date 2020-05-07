@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Image, StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import {Image, StyleSheet, View, Text, TouchableOpacity,Modal,TouchableHighlight,TextInput} from 'react-native';
 const styles = StyleSheet.create({
   SubmitButtonStyle: {
     margin: 6,
@@ -26,6 +26,44 @@ const styles = StyleSheet.create({
     fontSize: 15,
     borderRadius: 10,
   },
+  centeredView: {
+    justifyContent: "center",
+    alignItems: "center",
+    margin :'auto',
+    marginBottom: 12
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    height:'80%',
+    width:'80%',
+  },
+  openButton: {
+    backgroundColor: "#deac50",
+    borderRadius: 20,
+    padding: 8,
+    elevation: 2
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center"
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center"
+  },
 });
 function ac() {
   const [reset, setReset] = useState(true);
@@ -39,6 +77,8 @@ function ac() {
   const [humidity, setHumidity] = useState(0);
   const [wait, setWait] = useState(true);
   const [req,setReq] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [value, onChangeText] = useState('');
   const profile = {
     power: require('./icons/power.png'),
     mode: require('./icons/mode.png'),
@@ -56,7 +96,7 @@ function ac() {
   };
   function sendReq()
   {
-    fetch('http://192.168.1.14:3000/mode', {
+    fetch('http://'+value+':3000/mode', {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -65,7 +105,7 @@ function ac() {
       body: JSON.stringify({code:{power:reset,temp:temp,fan:fan,mode:mode,swingOne:swingOne,swingTwo:swingTwo,time:time}})
     }).then((response) => {
      // console.log(response.json());
-    });
+    }).catch(e => console.log(e));
     
   }
   function onOff() {
@@ -235,7 +275,7 @@ function ac() {
   }
   useEffect(() => {
     const interval = setInterval(() => {
-      fetch('http://192.168.1.15:3000/sensor')
+      fetch('http://'+value+':3000/sensor')
         .then(response => response.json())
         .then(responseJson => {
           setWait(false);
@@ -309,7 +349,7 @@ useEffect(() => {
           </View>
         )}
       </View>
-      <View style={{flex: 1, flexDirection: 'row', flexWrap: 'wrap'}}>
+      <View style={{flex: 1, flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center'}}>
         {buttonMaker(profile.power, 'Power', 'red', onOff)}
         {buttonMaker(profile.up, 'Up', 'red', up)}
         {buttonMaker(profile.mode, 'Mode', 'red', modeSelect)}
@@ -319,6 +359,47 @@ useEffect(() => {
         {buttonMaker(profile.swinglr, 'Swing', 'red', swingOneShow)}
         {buttonMaker(profile.swingud, 'Swing', 'red', swingTwoShow)}
       </View>
+      <View style={styles.centeredView}>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+           <View style ={{ marginTop:'45%'}}>
+           <TextInput
+           style={{ height: 40,width:180, borderColor: 'gray', borderWidth: 1, borderRadius :12, margin:'auto',marginBottom:5 }}
+           onChangeText={text => onChangeText(text)}
+           value={value}
+           placeholder='   Input your IP server...'
+           />
+
+            <TouchableHighlight
+              style={{ ...styles.openButton, backgroundColor: "#deac50" }}
+              onPress={() => {
+                setModalVisible(!modalVisible);
+              }}
+            >
+              <Text style={styles.textStyle}>OK</Text>
+            </TouchableHighlight>
+            </View>
+          </View>
+        </View>
+      </Modal>
+
+      <TouchableHighlight
+        style={styles.openButton}
+        onPress={() => {
+          setModalVisible(true);
+        }}
+      >
+        <Text style={styles.textStyle}>Setting</Text>
+      </TouchableHighlight>
+    </View> 
     </>
   );
 }
